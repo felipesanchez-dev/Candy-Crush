@@ -1,4 +1,4 @@
-import {ImageBackground, StyleSheet} from 'react-native';
+import {Image, ImageBackground, StyleSheet} from 'react-native';
 import React, {FC, useEffect} from 'react';
 import {commonStyles} from '../styles/commonStyles';
 import Animated, {
@@ -6,9 +6,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {screenWidth} from '../utils/Constants';
+import {screenHeight, screenWidth} from '../utils/Constants';
 import {useIsFocused} from '@react-navigation/native';
 import {useSound} from '../navigation/SoundContext';
+import LottieView from 'lottie-react-native';
+import ScalePress from '../components/ui/ScalePress';
+import { navigate } from '../utils/NavigationUtil';
 
 const HomeScreen: FC = () => {
   const {playSound} = useSound();
@@ -32,11 +35,36 @@ const HomeScreen: FC = () => {
   return (
     <ImageBackground
       source={require('../assets/images/b2.png')}
-      style={commonStyles.simpleContainer}>
+      style={commonStyles.container}>
       <Animated.Image
         source={require('../assets/images/banner.png')}
         style={[styles.img, animatedStyle]}
       />
+      <LottieView 
+        source={require('../assets/animations/bird.json')}
+        speed={1}
+        loop
+        autoPlay
+        hardwareAccelerationAndroid
+        style={styles.lottieView}
+
+      />
+
+      <LottieView 
+        source={require('../assets/animations/bird.json')}
+        speed={1}
+        loop
+        autoPlay
+        hardwareAccelerationAndroid
+        style={styles.lottieView2}
+
+      />
+      <ScalePress style={styles.playButtonContainer} onPress={() => navigate('LevelScreen')}>
+        <Image 
+        source={require('../assets/icons/play.png')}
+        style={styles.playButton}
+        />
+      </ScalePress>
     </ImageBackground>
   );
 };
@@ -49,6 +77,30 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     top: -20,
   },
+  lottieView: {
+   width: 200,
+   height: 200,
+   position: 'absolute',
+   right: -20,
+   top: '30%',
+   transform: [{ scaleX: 1 }],
+  },
+   lottieView2: {
+   width: 200,
+   height: 200,
+   position: 'absolute',
+   left: -20,
+   top: '30%',
+   transform: [{ scaleX: -1 }],
+  },
+  playButton: {
+    resizeMode: 'contain',
+    width: screenWidth * 0.5,
+    height: screenHeight * 0.2,
+  },
+  playButtonContainer: {
+    marginTop: 200,
+  }
 });
 
 export default HomeScreen;
