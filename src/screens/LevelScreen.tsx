@@ -12,13 +12,9 @@ const LevelScreen: FC = () => {
 
   const {levels} = useLevelStore();
 
-  const levelPressHandler = (id: string) => {
-    const levelKey = `level-${id}` as keyof GameLevels;
-    const level = gameLevels[levelKey];
-    navigate('GameScreen', {
-      level: {...level, id: id}
-    })
-  }
+  const levelPressHandler = (id: number) => {
+  navigate('GameScreen', { id }); // Solo envía el id
+}
 
   const renderItem = ({item}: any) => {
     
@@ -40,11 +36,11 @@ const LevelScreen: FC = () => {
             Nivel {item?.id}
           </Text>
 
-          {item?.heighScore > 0 && (
-            <Text style={levelStyles.levelText}>
-              HS: {item?.heighScore}
-            </Text>
-          )}
+         {item?.highScore > 0 && (
+  <Text style={levelStyles.levelText}>
+    HS: {item?.highScore}
+  </Text>
+)}
 
         </View>
       </ScalePress>
