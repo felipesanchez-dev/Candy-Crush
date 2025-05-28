@@ -8,7 +8,6 @@ const useGameLogic = () => {
     </View>
   )
 }
-
+const styles = StyleSheet.create({})
 export default useGameLogic
 
-const styles = StyleSheet.create({})
