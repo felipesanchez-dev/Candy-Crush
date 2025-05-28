@@ -2,12 +2,13 @@ import {StyleSheet, ImageBackground} from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {commonStyles} from '../styles/commonStyles';
 import GameHeader from '../components/game/GameHeader';
-import { useRoute } from '@react-navigation/native';
-import { useSound } from '../navigation/SoundContext';
-import { gameLevels } from '../utils/data';
+import {useRoute} from '@react-navigation/native';
+import {useSound} from '../navigation/SoundContext';
+import {gameLevels} from '../utils/data';
 import GameFooter from '../components/game/GameFooter';
+import GameTile from '../components/game/GameTile';
 
-const GameScreen:FC = () => {
+const GameScreen: FC = () => {
   const route = useRoute();
   const item = route?.params as any;
   const {playSound} = useSound();
@@ -23,7 +24,7 @@ const GameScreen:FC = () => {
       if (levelData) {
         setGridData(levelData.grid);
         setTotalCount(Number(levelData.pass));
-        setTimer(Number(levelData.time)); 
+        setTimer(Number(levelData.time));
       }
     }
   }, [item]);
@@ -37,6 +38,13 @@ const GameScreen:FC = () => {
         collectedCandies={collectedCandies}
         time={time}
       />
+      {gridData && (
+        <GameTile
+          data={gridData}
+          setData={setGridData}
+          setCollectedCandies={setCollectedCandies}
+        />
+      )}
       <GameFooter />
     </ImageBackground>
   );

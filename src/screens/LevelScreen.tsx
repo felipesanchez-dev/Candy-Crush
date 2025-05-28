@@ -6,18 +6,15 @@ import {levelStyles} from '../styles/levelStyles';
 import ScalePress from '../components/ui/ScalePress';
 import {goBack, navigate} from '../utils/NavigationUtil';
 import {useLevelStore} from '../state/useLevelStore';
-import { gameLevels } from '../utils/data';
 
 const LevelScreen: FC = () => {
-
   const {levels} = useLevelStore();
 
   const levelPressHandler = (id: number) => {
-  navigate('GameScreen', { id }); // Solo envía el id
-}
+    navigate('GameScreen', {id}); // Solo envía el id
+  };
 
   const renderItem = ({item}: any) => {
-    
     const opacity = item?.unlocked ? 1 : 0.5;
     const emoji = item?.completed ? '✅' : item?.unlocked ? '🍬' : '🔒';
 
@@ -26,22 +23,17 @@ const LevelScreen: FC = () => {
         style={levelStyles.levelItem}
         onPress={() => {
           if (item?.unlocked) {
-            levelPressHandler(item?.id)
+            levelPressHandler(item?.id);
           }
         }}>
         <View style={{opacity}}>
           <Text style={levelStyles.levelText}>{emoji}</Text>
 
-          <Text style={levelStyles.levelText}>
-            Nivel {item?.id}
-          </Text>
+          <Text style={levelStyles.levelText}>Nivel {item?.id}</Text>
 
-         {item?.highScore > 0 && (
-  <Text style={levelStyles.levelText}>
-    HS: {item?.highScore}
-  </Text>
-)}
-
+          {item?.highScore > 0 && (
+            <Text style={levelStyles.levelText}>HS: {item?.highScore}</Text>
+          )}
         </View>
       </ScalePress>
     );
