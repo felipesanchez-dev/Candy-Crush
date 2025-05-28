@@ -5,6 +5,7 @@ import GameHeader from '../components/game/GameHeader';
 import { useRoute } from '@react-navigation/native';
 import { useSound } from '../navigation/SoundContext';
 import { gameLevels } from '../utils/data';
+import GameFooter from '../components/game/GameFooter';
 
 const GameScreen:FC = () => {
   const route = useRoute();
@@ -36,6 +37,7 @@ const GameScreen:FC = () => {
         collectedCandies={collectedCandies}
         time={time}
       />
+      <GameFooter />
     </ImageBackground>
   );
 };
