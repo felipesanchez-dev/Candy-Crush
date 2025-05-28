@@ -11,7 +11,7 @@ const LevelScreen: FC = () => {
   const {levels} = useLevelStore();
 
   const levelPressHandler = (id: number) => {
-    navigate('GameScreen', {id}); // Solo envía el id
+    navigate('GameScreen', {id}); 
   };
 
   const renderItem = ({item}: any) => {
