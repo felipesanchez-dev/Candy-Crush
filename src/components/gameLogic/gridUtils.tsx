@@ -8,7 +8,5 @@ const gridUtils = () => {
     </View>
   )
 }
-
-export default gridUtils
-
 const styles = StyleSheet.create({})
+export default gridUtils
