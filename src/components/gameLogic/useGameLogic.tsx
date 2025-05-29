@@ -10,7 +10,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
           : {x: new Animated.Value(0), y: new Animated.Value(0)},
       ),
     ),
-  );
+  ).current;
 
   const handleGesture = async (
     event: any,

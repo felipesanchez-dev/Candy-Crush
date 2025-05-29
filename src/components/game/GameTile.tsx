@@ -27,10 +27,22 @@ const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
             <PanGestureHandler
               key={`${rowIndex}-${colIndex}`}
               onGestureEvent={event => {
-                handleGesture(event, rowIndex, colIndex, State.ACTIVE, setCollectedCandies)
+                handleGesture(
+                  event,
+                  rowIndex,
+                  colIndex,
+                  State.ACTIVE,
+                  setCollectedCandies,
+                );
               }}
               onHandlerStateChange={event => {
-                handleGesture(event, rowIndex, colIndex, event?.nativeEvent?.state, setCollectedCandies)
+                handleGesture(
+                  event,
+                  rowIndex,
+                  colIndex,
+                  event?.nativeEvent?.state,
+                  setCollectedCandies,
+                );
               }}>
               <View
                 style={[
@@ -40,7 +52,23 @@ const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
                 {tile !== null && (
                   <Animated.Image
                     source={getCandyImage(tile)}
-                    style={[styles.candy]}
+                    style={[
+                      styles.candy,
+                      tile === null || !animatedValues[rowIndex][colIndex]
+                        ? {}
+                        : {
+                            transform: [
+                              {
+                                translateX:
+                                  animatedValues[rowIndex][colIndex].x,
+                              },
+                              {
+                                translateY:
+                                  animatedValues[rowIndex][colIndex].y,
+                              },
+                            ],
+                          },
+                    ]}
                     resizeMode="contain"
                   />
                 )}
