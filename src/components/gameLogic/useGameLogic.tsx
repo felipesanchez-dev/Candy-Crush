@@ -1,6 +1,7 @@
 import {useRef} from 'react';
 import {Animated} from 'react-native';
 import {State} from 'react-native-gesture-handler';
+import {playSound} from '../../utils/SoundUtility';
 
 const useGameLogic = (data: any[][], setData: (data: any) => any) => {
   const animatedValues = useRef(
@@ -18,7 +19,31 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
     colIndex: number,
     direction: 'up' | 'down' | 'left' | 'rigth',
     setCollectedCandes: any,
-  ) => {};
+  ) => {
+    playSound('candy_shuffle');
+
+    let newGrid = JSON.parse(JSON.stringify(data));
+    let targetRow = rowIndex;
+    let targetCol = colIndex;
+
+    if (direction === 'up') targetRow -= 1;
+    if (direction === 'down') targetRow += 1;
+    if (direction === 'left') targetCol -= 1;
+    if (direction === 'rigth') targetCol += 1;
+
+    // Check bounds and skip bull tiles
+    if (
+      targetRow >= 0 &&
+      targetRow < data?.length &&
+      targetCol >= 0 &&
+      targetCol < data[0].length &&
+      data[rowIndex][colIndex] !== null &&
+      data[targetRow][targetCol] !== null
+    ) {
+      
+    }
+
+  };
 
   const handleGesture = async (
     event: any,
