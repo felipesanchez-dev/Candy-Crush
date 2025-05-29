@@ -17,7 +17,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
     rowIndex: number,
     colIndex: number,
     direction: 'up' | 'down' | 'left' | 'rigth',
-    setCollectedCandes: any
+    setCollectedCandes: any,
   ) => {};
 
   const handleGesture = async (
@@ -37,11 +37,15 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
 
       if (absX > absY) {
         if (translateX > 0) {
+          await handleSwipe(rowIndex, colIndex, 'rigth', setCollectedCandes);
         } else {
+          await handleSwipe(rowIndex, colIndex, 'left', setCollectedCandes);
         }
       } else {
         if (translateY > 0) {
+          await handleSwipe(rowIndex, colIndex, 'down', setCollectedCandes);
         } else {
+          await handleSwipe(rowIndex, colIndex, 'up', setCollectedCandes);
         }
       }
     }
