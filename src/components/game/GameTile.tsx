@@ -4,6 +4,7 @@ import {screenHeight} from '../../utils/Constants';
 import {
   gestureHandlerRootHOC,
   PanGestureHandler,
+  State,
 } from 'react-native-gesture-handler';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {getCandyImage} from '../../utils/data';
@@ -25,8 +26,12 @@ const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
           {row?.map((tile, colIndex) => (
             <PanGestureHandler
               key={`${rowIndex}-${colIndex}`}
-              onGestureEvent={event => {}}
-              onHandlerStateChange={event => {}}>
+              onGestureEvent={event => {
+                handleGesture(event, rowIndex, colIndex, State.ACTIVE, setCollectedCandies)
+              }}
+              onHandlerStateChange={event => {
+                handleGesture(event, rowIndex, colIndex, event?.nativeEvent?.state, setCollectedCandies)
+              }}>
               <View
                 style={[
                   styles.tile,
