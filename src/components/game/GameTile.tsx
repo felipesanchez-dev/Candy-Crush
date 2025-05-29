@@ -7,6 +7,7 @@ import {
 } from 'react-native-gesture-handler';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {getCandyImage} from '../../utils/data';
+import useGameLogic from '../gameLogic/useGameLogic';
 
 interface GameTileProps {
   data: any[][];
@@ -16,7 +17,7 @@ interface GameTileProps {
 
 const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
 
-
+  const {handleGesture, animatedValues } = useGameLogic( data, setData ) 
 
   return (
     <View style={styles.container}>
