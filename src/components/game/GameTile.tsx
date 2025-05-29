@@ -16,8 +16,7 @@ interface GameTileProps {
 }
 
 const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
-
-  const {handleGesture, animatedValues } = useGameLogic( data, setData ) 
+  const {handleGesture, animatedValues} = useGameLogic(data, setData);
 
   return (
     <View style={styles.container}>
