@@ -24,7 +24,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
   const handleSwipe = async (
     rowIndex: number,
     colIndex: number,
-    direction: 'up' | 'down' | 'left' | 'rigth',
+    direction: 'up' | 'down' | 'left' | 'right', // corregido aquí
     setCollectedCandes: any,
   ) => {
     playSound('candy_shuffle');
@@ -36,7 +36,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
     if (direction === 'up') targetRow -= 1;
     if (direction === 'down') targetRow += 1;
     if (direction === 'left') targetCol -= 1;
-    if (direction === 'rigth') targetCol += 1;
+    if (direction === 'right') targetCol += 1; // corregido aquí
 
     // Check bounds and skip bull tiles
     if (
@@ -155,7 +155,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
 
       if (absX > absY) {
         if (translateX > 0) {
-          await handleSwipe(rowIndex, colIndex, 'rigth', setCollectedCandes);
+          await handleSwipe(rowIndex, colIndex, 'right', setCollectedCandes); // Correcion
         } else {
           await handleSwipe(rowIndex, colIndex, 'left', setCollectedCandes);
         }
