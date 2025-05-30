@@ -3,6 +3,7 @@ import {Animated} from 'react-native';
 import {State} from 'react-native-gesture-handler';
 import {playSound} from '../../utils/SoundUtility';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import { checkForMatches } from './gridUtils';
 
 const useGameLogic = (data: any[][], setData: (data: any) => any) => {
   const animatedValues = useRef(
