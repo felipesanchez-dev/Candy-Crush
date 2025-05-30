@@ -2,6 +2,7 @@ export const checkForMatches = async (grid: any[][]) => {
   const matches: {row: number; col: number}[] = [];
 
   // check horizontal matches (3 or more in a row)
+
   for (let r = 0; r < grid.length; r++) {
     let matchLength = 1;
 
@@ -59,6 +60,25 @@ export const clearMatches = async (
   matches?.forEach(match => {
     grid[match.row][match.col] = 0;
   });
-  
+
+  return grid;
+};
+
+export const shiftDown = async (grid: any[][]) => {
+  for (let col = 0; col < grid[0].length; col++) {
+    let emptyRow = grid?.length - 1;
+
+    for (let row = grid?.length - 1; row >= 0; row--) {
+      if (grid[row][col] !== null && grid[row][col] !== 0) {
+        if (emptyRow !== row) {
+          grid[emptyRow][col] = grid[row][col];
+          grid[row][col] = 0;
+        }
+        emptyRow--;
+      } else if (grid[row][col] === null) {
+        emptyRow = row - 1;
+      }
+    }
+  }
   return grid;
 };
