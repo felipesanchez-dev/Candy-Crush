@@ -1,5 +1,3 @@
-
-
 export const checkForMatches = async (grid: any[][]) => {
   const matches: {row: number; col: number}[] = [];
 
@@ -52,4 +50,15 @@ export const checkForMatches = async (grid: any[][]) => {
   }
 
   return matches;
+};
+
+export const clearMatches = async (
+  grid: any[][],
+  matches: {row: number; col: number}[],
+) => {
+  matches?.forEach(match => {
+    grid[match.row][match.col] = 0;
+  });
+  
+  return grid;
 };
