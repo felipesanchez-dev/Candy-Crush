@@ -82,3 +82,17 @@ export const shiftDown = async (grid: any[][]) => {
   }
   return grid;
 };
+
+export const fillRandomCandies = async (grid: any[][]) => {
+  const candyTypes = [1, 2, 3, 4, 5];
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid.length; r++) {
+      if (grid[r][c] === 0) {
+        const randomCandy =
+          candyTypes[Math.floor(Math.random() * candyTypes.length)];
+        grid[r][c] = randomCandy;
+      }
+    }
+  }
+  return grid;
+};
