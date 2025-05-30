@@ -3,7 +3,7 @@ import {Animated} from 'react-native';
 import {State} from 'react-native-gesture-handler';
 import {playSound} from '../../utils/SoundUtility';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-import { checkForMatches, clearMatches, shiftDown } from './gridUtils';
+import {checkForMatches, clearMatches, shiftDown} from './gridUtils';
 
 const useGameLogic = (data: any[][], setData: (data: any) => any) => {
   const animatedValues = useRef(
@@ -127,8 +127,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
           animatedValues[targetRow][targetCol]!.x.setValue(0);
           animatedValues[targetRow][targetCol]!.y.setValue(0);
 
-          setData(data)
-
+          setData(data);
         }
       });
     }
