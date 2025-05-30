@@ -96,3 +96,41 @@ export const fillRandomCandies = async (grid: any[][]) => {
   }
   return grid;
 };
+
+export const hasPossibleMoves = async (grid: any[][]): Promise<boolean> => {
+  const rows = grid.length;
+  const cols = grid[0].length;
+
+  const swap = (r1: number, c1: number, r2: number, c2: number) => {
+    const temp = grid[r1][c1];
+    grid[r1][c1] = grid[r2][c2];
+    grid[r2][c1] = temp;
+  };
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === null) continue;
+
+      if (c + 1 < cols && grid[r][c + 1] !== null) {
+        swap(r, c, r, c + 1);
+        if ((await checkForMatches(grid)).length > 0) {
+          swap(r, c, r, c + 1);
+          return true;
+        }
+        swap(r, c, r, c + 1);
+      }
+
+      if (r + 1 < rows && grid[r + 1][c] !== null) {
+        swap(r, c, r + 1, c);
+        if ((await checkForMatches(grid)).length > 0) {
+          swap(r, c, r + 1, c);
+          return true;
+        }
+        swap(r, c, r + 1, c);
+      }
+    }
+  }
+
+  console.log('Movimiento Invalido');
+  return false;
+};

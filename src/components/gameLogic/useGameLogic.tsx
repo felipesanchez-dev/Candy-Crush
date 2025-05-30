@@ -7,6 +7,7 @@ import {
   checkForMatches,
   clearMatches,
   fillRandomCandies,
+  hasPossibleMoves,
   shiftDown,
 } from './gridUtils';
 
@@ -155,7 +156,7 @@ const useGameLogic = (data: any[][], setData: (data: any) => any) => {
 
       if (absX > absY) {
         if (translateX > 0) {
-          await handleSwipe(rowIndex, colIndex, 'right', setCollectedCandes); // Correcion
+          await handleSwipe(rowIndex, colIndex, 'right', setCollectedCandes);
         } else {
           await handleSwipe(rowIndex, colIndex, 'left', setCollectedCandes);
         }
