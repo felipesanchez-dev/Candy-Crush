@@ -1,4 +1,4 @@
-import {Animated, StyleSheet, Text, View} from 'react-native';
+import {Animated, StyleSheet, View, Image} from 'react-native';
 import React, {FC} from 'react';
 import {screenHeight} from '../../utils/Constants';
 import {
@@ -26,16 +26,8 @@ const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
           {row?.map((tile, colIndex) => (
             <PanGestureHandler
               key={`${rowIndex}-${colIndex}`}
-              onGestureEvent={event => {
-                handleGesture(
-                  event,
-                  rowIndex,
-                  colIndex,
-                  State.ACTIVE,
-                  setCollectedCandies,
-                );
-              }}
               onHandlerStateChange={event => {
+                console.log(`📱 Gesto en (${rowIndex},${colIndex}), estado: ${event?.nativeEvent?.state}`);
                 handleGesture(
                   event,
                   rowIndex,
@@ -44,35 +36,29 @@ const GameTile: FC<GameTileProps> = ({data, setCollectedCandies, setData}) => {
                   setCollectedCandies,
                 );
               }}>
-              <View
+              <Animated.View
                 style={[
                   styles.tile,
                   tile === null ? styles.emptyTile : styles.activeTile,
+                  {
+                    transform: [
+                      {
+                        translateX: animatedValues[rowIndex][colIndex]?.x || 0,
+                      },
+                      {
+                        translateY: animatedValues[rowIndex][colIndex]?.y || 0,
+                      },
+                    ],
+                  },
                 ]}>
-                {tile !== null && (
-                  <Animated.Image
+                {tile !== null && tile !== 0 && (
+                  <Image
                     source={getCandyImage(tile)}
-                    style={[
-                      styles.candy,
-                      tile === null || !animatedValues[rowIndex][colIndex]
-                        ? {}
-                        : {
-                            transform: [
-                              {
-                                translateX:
-                                  animatedValues[rowIndex][colIndex].x,
-                              },
-                              {
-                                translateY:
-                                  animatedValues[rowIndex][colIndex].y,
-                              },
-                            ],
-                          },
-                    ]}
+                    style={styles.candy}
                     resizeMode="contain"
                   />
                 )}
-              </View>
+              </Animated.View>
             </PanGestureHandler>
           ))}
         </View>
