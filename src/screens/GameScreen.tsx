@@ -22,11 +22,13 @@ const GameScreen: FC = () => {
   const [collectedCandies, setCollectedCandies] = useState<number>(0);
   const [showAnimation, setShowAnimation] = useState<boolean>(false);
   const [firstAnimation, setFirstAnimation] = useState<boolean>(false);
+  const [gameEnded, setGameEnded] = useState<boolean>(false); // <- Nuevo estado
 
   const {completeLevel, unlockLevel} = useLevelStore();
 
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const timerRef = useRef<NodeJS.Timeout | null>(null); // <- Para controlar el timer
 
   useEffect(() => {
     if (item?.id) {
@@ -41,30 +43,69 @@ const GameScreen: FC = () => {
   }, [item]);
 
   useEffect(() => {
-    if (time === 0) {
+    if (time === 0 && !gameEnded) {
       handleGameOver();
     }
-  }, [time]);
+  }, [time, gameEnded]);
+
+  // ✨ NUEVA FUNCIÓN: Verificar victoria inmediata
+  const checkVictory = () => {
+    if (collectedCandies >= totalCount && totalCount > 0 && !gameEnded) {
+      console.log(`🎉 ¡VICTORIA! Dulces: ${collectedCandies}/${totalCount}`);
+      setGameEnded(true);
+      
+      // Detener el timer inmediatamente
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      
+      // Completar nivel inmediatamente
+      completeLevel(item?.id, collectedCandies);
+      unlockLevel(item?.id + 1);
+      
+      // Mostrar animación de victoria
+      setShowAnimation(true);
+      startHeartBeatAnimation();
+      
+      // Mostrar alerta después de la animación
+      setTimeout(() => {
+        Alert.alert('🎉 ¡Felicidades!', 'Has completado el nivel con éxito.', [
+          {
+            text: 'Continuar',
+            onPress: () => goBack(),
+          },
+        ]);
+      }, 3000); // Esperar 3 segundos para que termine la animación
+    }
+  };
 
   const handleGameOver = () => {
+    if (gameEnded) return; // Evitar múltiples llamadas
+    
+    setGameEnded(true);
+    
     if (collectedCandies >= totalCount) {
-      completeLevel(item?.level?.id, collectedCandies);
-      unlockLevel(item?.level?.id + 1);
+      completeLevel(item?.id, collectedCandies);
+      unlockLevel(item?.id + 1);
       Alert.alert('🎉 ¡Felicidades!', 'Has completado el nivel con éxito.', [
         {
-          text: 'Aceptar',
+          text: 'Continuar',
           onPress: () => goBack(),
         },
       ]);
     } else {
       Alert.alert(
-        '😢 ¡Juego Terminado!',
+        '😢 ¡Tiempo Agotado!',
         'No has alcanzado la cantidad de dulces necesarios.',
         [
           {
             text: 'Reintentar',
             onPress: () => {
+              setGameEnded(false);
               setCollectedCandies(0);
+              setFirstAnimation(false);
+              setShowAnimation(false);
               setGridData(gameLevels[`level${item.id}`].grid);
               setTimer(gameLevels[`level${item.id}`].time);
             },
@@ -78,27 +119,42 @@ const GameScreen: FC = () => {
     }
   };
 
+  // ✨ VERIFICAR VICTORIA cuando cambian los dulces recolectados
   useEffect(() => {
-    if (time && time > 0) {
-      const timerInteval = setInterval(() => {
+    checkVictory();
+  }, [collectedCandies]);
+
+  useEffect(() => {
+    if (time && time > 0 && !gameEnded) {
+      timerRef.current = setInterval(() => {
         setTimer((prev: number) => {
-          if (prev === 1000) {
-            clearInterval(timerInteval);
+          if (prev <= 1000) {
+            if (timerRef.current) {
+              clearInterval(timerRef.current);
+              timerRef.current = null;
+            }
             return 0;
           }
           return prev - 1000;
         });
       }, 1000);
-      return () => clearInterval(timerInteval);
+      
+      return () => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+      };
     }
-  }, [time]);
+  }, [time, gameEnded]);
 
+  // ✨ ACTUALIZADA: Solo mostrar animación, no manejar lógica de victoria aquí
   useEffect(() => {
-    if (collectedCandies >= totalCount && totalCount > 0 && !firstAnimation) {
+    if (collectedCandies >= totalCount && totalCount > 0 && !firstAnimation && !gameEnded) {
       setShowAnimation(true);
       startHeartBeatAnimation();
     }
-  }, [collectedCandies, totalCount]);
+  }, [collectedCandies, totalCount, gameEnded]);
 
   const startHeartBeatAnimation = () => {
     playSound('cheer', false);
@@ -110,7 +166,7 @@ const GameScreen: FC = () => {
             duration: 800,
             useNativeDriver: true,
           }),
-          Animated.timing(fadeAnim, {
+          Animated.timing(scaleAnim, {
             toValue: 1.2,
             duration: 800,
             useNativeDriver: true,
@@ -122,7 +178,7 @@ const GameScreen: FC = () => {
             duration: 800,
             useNativeDriver: true,
           }),
-          Animated.timing(fadeAnim, {
+          Animated.timing(scaleAnim, {
             toValue: 1,
             duration: 800,
             useNativeDriver: true,
@@ -147,17 +203,16 @@ const GameScreen: FC = () => {
         collectedCandies={collectedCandies}
         time={time}
       />
-      {gridData && (
+      {gridData && !gameEnded && (
         <GameTile
           data={gridData}
           setData={setGridData}
           setCollectedCandies={setCollectedCandies}
         />
       )}
-      {
-        showAnimation && (
-          <>
-            <Animated.Image 
+      {showAnimation && (
+        <>
+          <Animated.Image 
             source={require('../assets/text/t2.png')}
             style={[
               styles.centerImage,
@@ -166,20 +221,20 @@ const GameScreen: FC = () => {
                 transform: [{scale: scaleAnim}]
               }
             ]}
-            />
-            <LottieView 
+          />
+          <LottieView 
             source={require('../assets/animations/confetti.json')}
             style={styles.lottie}
             autoPlay
             loop
-            />
-          </>
-        )
-      }
+          />
+        </>
+      )}
       <GameFooter />
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   centerImage: {
     position: 'absolute',
@@ -198,4 +253,5 @@ const styles = StyleSheet.create({
     top: '10%'
   }
 });
+
 export default GameScreen;
