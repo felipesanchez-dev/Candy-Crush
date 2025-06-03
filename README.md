@@ -13,6 +13,42 @@
 
 - **iOS:** La aplicación es compatible con dispositivos Apple (iPhone, iPad).
 
+
+## 📸 Capturas de Pantalla
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="./img/bobeda-de-app.png" alt="Ícono de la aplicación" width="180" height="auto"><br>
+        <sub><b>Ícono de App</b></sub>
+      </td>
+      <td align="center">
+        <img src="./img/SplashScreen.png" alt="Pantalla de carga" width="180" height="auto"><br>
+        <sub><b>Splash Screen</b></sub>
+      </td>
+      <td align="center">
+        <img src="./img/HomeScreen.png" alt="Menú principal" width="180" height="auto"><br>
+        <sub><b>Menú Principal</b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="./img/LevelSelection.png" alt="Selección de niveles" width="180" height="auto"><br>
+        <sub><b>Selección de Niveles</b></sub>
+      </td>
+      <td align="center">
+        <img src="./img/GameScreen.png" alt="Pantalla de juego" width="180" height="auto"><br>
+        <sub><b>Pantalla de Juego</b></sub>
+      </td>
+    </tr>
+  </table>
+</div>
+
+> 💡 **Tip**: Haz clic en cualquier imagen para verla en tamaño completo
+
+// ...existing code...
+
 ## 📱 Descripción del Proyecto
 
 Este proyecto implementa un juego completo de match-3 con características avanzadas incluyendo:
