@@ -8,11 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "link-fonts": "npx react-native-asset",
+    "link-fonts":"npx react-native-asset",
     "pod-install": "cd ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
-    "create-apk": "cd android && gradlew assembleRelease",
-    "create-apk-debug": "cd android && gradlew assembleDebug",
-    "clean-android": "cd android && gradlew clean"
+    "create-apk":"cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-navigation/native": "^7.0.14",
