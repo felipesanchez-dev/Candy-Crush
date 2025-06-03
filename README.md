@@ -1,16 +1,126 @@
-Este es un nuevo proyecto de [**React Native**](https://reactnative.dev), creado usando [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🍭 Candy Crush - React Native
 
-# Comenzando
+> Un juego de rompecabezas móvil match-3 desarrollado en React Native, inspirado en el clásico Candy Crush con mecánicas modernas y progresión de niveles.
 
-> **Nota**: Asegúrate de haber completado la guía [Configurar tu Entorno](https://reactnative.dev/docs/set-up-your-environment) antes de continuar.
+![React Native](https://img.shields.io/badge/React%20Native-0.76.5-blue.svg)
+![Zustand](https://img.shields.io/badge/Zustand-State%20Management-green.svg)
+![Reanimated](https://img.shields.io/badge/Reanimated-Animations-purple.svg)
 
-## Paso 1: Iniciar Metro
+## 📱 Plataformas Compatibles
 
-Primero, necesitarás ejecutar **Metro**, la herramienta de construcción de JavaScript para React Native.
+- **Android:** Accede a la aplicación desde cualquier dispositivo Android.  
+  [Apk Demo (.apk)](https://github.com/felipesanchez-dev/Candy-Crush/blob/main/apk/Candy%20Crush.apk?raw=true)
 
-Para iniciar el servidor de desarrollo Metro, ejecuta el siguiente comando desde la raíz de tu proyecto React Native:
+- **iOS:** La aplicación es compatible con dispositivos Apple (iPhone, iPad).
 
-```sh
+## 📱 Descripción del Proyecto
+
+Este proyecto implementa un juego completo de match-3 con características avanzadas incluyendo:
+
+- **10 niveles únicos** con diferentes configuraciones y objetivos
+- **Sistema de progresión** con desbloqueo gradual de contenido
+- **Animaciones fluidas** usando Reanimated y Lottie
+- **Sistema de audio inmersivo** con efectos de sonido contextuales
+- **Interfaz responsive** que se adapta a diferentes dispositivos
+- **Persistencia de datos** para mantener el progreso entre sesiones
+
+## 🏗️ Arquitectura de Alto Nivel
+
+La aplicación sigue una arquitectura modular con clara separación de responsabilidades:
+
+```
+src/
+├── components/          # Componentes reutilizables de UI
+├── screens/            # Pantallas principales del juego
+├── stores/             # Gestión de estado con Zustand
+├── utils/              # Utilidades y helpers
+├── contexts/           # Contextos de React (Audio, etc.)
+├── assets/             # Recursos estáticos (imágenes, sonidos)
+└── navigation/         # Configuración de navegación
+```
+
+## 🚀 Tecnologías Utilizadas
+
+### Stack Principal
+
+- **React Native 0.76.5** - Framework principal
+- **TypeScript** - Tipado estático
+- **Zustand** - Gestión de estado global
+- **MMKV** - Persistencia de datos nativa
+
+### Navegación y UI
+
+- **@react-navigation/native** - Navegación entre pantallas
+- **react-native-responsive-fontsize** - Diseño responsive
+- **react-native-gesture-handler** - Manejo de gestos
+
+### Animaciones y Efectos
+
+- **react-native-reanimated** - Animaciones nativas
+- **lottie-react-native** - Animaciones vectoriales
+- **react-native-sound-player** - Sistema de audio
+
+## 📋 Características Principales
+
+### 🎮 Mecánicas de Juego
+
+| Característica            | Implementación                               | Componentes Clave                |
+| ------------------------- | -------------------------------------------- | -------------------------------- |
+| **Sistema Match-3**       | Detección de coincidencias en cuadrícula 8x8 | `GameTile`, `gridUtils`          |
+| **Progresión de Niveles** | 10 niveles con objetivos únicos              | `useLevelStore`, `gameLevels`    |
+| **Sistema de Puntuación** | Cálculo dinámico con multiplicadores         | `ScoreSystem`, `GameLogic`       |
+| **Animaciones**           | Transiciones fluidas y feedback visual       | `LottieView`, `useAnimatedStyle` |
+| **Audio Contextual**      | Efectos de sonido inmersivos                 | `SoundContext`, `SoundUtility`   |
+
+### 🎯 Funcionalidades del Sistema
+
+- **Persistencia de Progreso**: El juego guarda automáticamente tu progreso
+- **Desbloqueo Progresivo**: Los niveles se desbloquean al completar el anterior
+- **Puntuaciones Máximas**: Registro de mejores puntuaciones por nivel
+- **Feedback Háptico**: Vibraciones para mejorar la experiencia
+- **Interfaz Adaptativa**: Se ajusta a diferentes tamaños de pantalla
+
+## 🛠️ Instalación y Configuración
+
+### Prerrequisitos
+
+Asegúrate de tener configurado tu entorno de desarrollo React Native:
+
+- [Configurar tu Entorno](https://reactnative.dev/docs/set-up-your-environment)
+- Node.js >= 16
+- React Native CLI
+- Android Studio / Xcode
+
+### Instalación
+
+1. **Clonar el repositorio**
+
+```bash
+git clone <repository-url>
+cd CandyCrush
+```
+
+2. **Instalar dependencias**
+
+```bash
+# Usando npm
+npm install
+
+# O usando Yarn
+yarn install
+```
+
+3. **Instalar dependencias de iOS (solo macOS)**
+
+```bash
+cd ios && pod install && cd ..
+```
+
+### 🚀 Ejecutar la Aplicación
+
+#### Paso 1: Iniciar Metro
+
+```bash
 # Usando npm
 npm start
 
@@ -18,13 +128,11 @@ npm start
 yarn start
 ```
 
-## Paso 2: Construir y ejecutar tu aplicación
+#### Paso 2: Ejecutar en dispositivo/emulador
 
-Con Metro ejecutándose, abre una nueva ventana/panel de terminal desde la raíz de tu proyecto React Native, y usa uno de los siguientes comandos para construir y ejecutar tu aplicación Android o iOS:
+**Para Android:**
 
-### Android
-
-```sh
+```bash
 # Usando npm
 npm run android
 
@@ -32,25 +140,9 @@ npm run android
 yarn android
 ```
 
-### iOS
+**Para iOS:**
 
-Para iOS, recuerda instalar las dependencias de CocoaPods (esto solo necesita ejecutarse en el primer clon o después de actualizar dependencias nativas).
-
-La primera vez que crees un nuevo proyecto, ejecuta el bundler de Ruby para instalar CocoaPods:
-
-```sh
-bundle install
-```
-
-Luego, cada vez que actualices tus dependencias nativas, ejecuta:
-
-```sh
-bundle exec pod install
-```
-
-Para más información, visita la [guía de introducción de CocoaPods](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
+```bash
 # Usando npm
 npm run ios
 
@@ -58,40 +150,175 @@ npm run ios
 yarn ios
 ```
 
-Si todo está configurado correctamente, deberías ver tu nueva aplicación ejecutándose en el Emulador de Android, Simulador de iOS, o tu dispositivo conectado.
+## 🎮 Flujo de Juego
 
-Esta es una forma de ejecutar tu aplicación — también puedes construirla directamente desde Android Studio o Xcode.
+### Navegación de Pantallas
 
-## Paso 3: Modificar tu aplicación
+```mermaid
+graph TD
+    A[Splash Screen] --> B[Home Screen]
+    B --> C[Level Selection]
+    C --> D[Game Screen]
+    D --> E[Game Over/Victory]
+    E --> C
+    E --> F[Next Level]
+    F --> D
+```
 
-¡Ahora que has ejecutado exitosamente la aplicación, hagamos algunos cambios!
+### Estados del Juego
 
-Abre `App.tsx` en tu editor de texto favorito y haz algunos cambios. Cuando guardes, tu aplicación se actualizará automáticamente y reflejará estos cambios — esto es posible gracias a [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+1. **Inicio**: Pantalla de bienvenida con animación
+2. **Selección de Nivel**: Grid de niveles disponibles
+3. **Juego Activo**: Mecánicas principales de match-3
+4. **Transición**: Animaciones entre estados
+5. **Resultado**: Pantalla de victoria/derrota
 
-Cuando quieras forzar una recarga, por ejemplo para reiniciar el estado de tu aplicación, puedes realizar una recarga completa:
+## 🏪 Gestión de Estado
 
-- **Android**: Presiona la tecla <kbd>R</kbd> dos veces o selecciona **"Reload"** del **Menú de Desarrollo**, accesible vía <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) o <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Presiona <kbd>R</kbd> en el Simulador de iOS.
+### Level Store (Zustand)
 
-## ¡Felicitaciones! :tada:
+```typescript
+interface LevelState {
+  currentLevel: number;
+  unlockedLevels: number[];
+  levelScores: Record<number, number>;
+  totalScore: number;
+  // Métodos para actualizar estado
+}
+```
 
-Has ejecutado y modificado exitosamente tu aplicación React Native. :partying_face:
+### Persistencia con MMKV
 
-### ¿Y ahora qué?
+- **Progreso del jugador** se guarda automáticamente
+- **Puntuaciones máximas** persisten entre sesiones
+- **Configuraciones** de audio y preferencias
 
-- Si quieres agregar este nuevo código React Native a una aplicación existente, revisa la [guía de Integración](https://reactnative.dev/docs/integration-with-existing-apps).
-- Si tienes curiosidad por aprender más sobre React Native, revisa la [documentación](https://reactnative.dev/docs/getting-started).
+## 🎨 Componentes Clave
 
-# Solución de Problemas
+### GameTile
 
-Si tienes problemas para hacer funcionar los pasos anteriores, consulta la página de [Solución de Problemas](https://reactnative.dev/docs/troubleshooting).
+Componente individual de cada dulce en la cuadrícula:
 
-# Aprende Más
+- Manejo de gestos (tap, swipe)
+- Animaciones de estado
+- Detección de coincidencias
 
-Para aprender más sobre React Native, echa un vistazo a los siguientes recursos:
+### ScalePress
 
-- [Sitio Web de React Native](https://reactnative.dev) - aprende más sobre React Native.
-- [Comenzando](https://reactnative.dev/docs/environment-setup) - una **visión general** de React Native y cómo configurar tu entorno.
-- [Aprende lo Básico](https://reactnative.dev/docs/getting-started) - un **tour guiado** de los **conceptos básicos** de React Native.
-- [Blog](https://reactnative.dev/blog) - lee las últimas publicaciones oficiales del **Blog** de React Native.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - el **repositorio** de GitHub de código abierto para React Native.
+Wrapper para feedback táctil:
+
+- Animaciones de presión
+- Feedback háptico
+- Escalado suave
+
+### SoundContext
+
+Gestión centralizada de audio:
+
+- Efectos de sonido contextuales
+- Control de volumen
+- Optimización de rendimiento
+
+## 📱 Diseño Responsive
+
+La aplicación utiliza:
+
+- **react-native-responsive-fontsize** para textos adaptativos
+- **Flexbox** para layouts flexibles
+- **Dimensiones dinámicas** basadas en el dispositivo
+- **SafeAreaView** para compatibilidad con diferentes pantallas
+
+## 🔧 Desarrollo y Debugging
+
+### Scripts Disponibles
+
+```bash
+# Desarrollo
+npm start                 # Iniciar Metro bundler
+npm run android          # Ejecutar en Android
+npm run ios             # Ejecutar en iOS
+
+# Debugging
+npm run lint            # Verificar código
+npm run test           # Ejecutar pruebas
+```
+
+### Hot Reload y Fast Refresh
+
+- **Fast Refresh** habilitado por defecto
+- **Hot Reload**: <kbd>R</kbd> x2 (Android) o <kbd>R</kbd> (iOS)
+- **Dev Menu**: <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) o <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS)
+
+## 🐛 Solución de Problemas
+
+### Problemas Comunes
+
+| Problema                  | Solución                                  |
+| ------------------------- | ----------------------------------------- |
+| Metro no inicia           | `npx react-native start --reset-cache`    |
+| Error de dependencias iOS | `cd ios && pod install --repo-update`     |
+| Problemas de audio        | Verificar permisos en AndroidManifest.xml |
+| Animaciones lentas        | Habilitar Hermes en Android               |
+
+### Logs y Debugging
+
+```bash
+# Ver logs en tiempo real
+npx react-native log-android  # Android
+npx react-native log-ios      # iOS
+
+# Flipper para debugging avanzado
+npm install -g flipper
+```
+
+## 🚀 Próximas Características
+
+### Roadmap Planificado
+
+- [ ] **Sistema de Logros** - Desbloquea logros basados en rendimiento
+- [ ] **Modo Multijugador** - Competir con otros jugadores
+- [ ] **Power-ups** - Elementos especiales para ayudar en niveles difíciles
+- [ ] **Temas Visuales** - Diferentes estilos gráficos
+- [ ] **Integración Social** - Compartir puntuaciones
+- [ ] **Más Niveles** - Expansión a 50+ niveles únicos
+
+### Integraciones Pendientes
+
+- **Configuración de Nivel Dinámico** - Cargar reglas específicas por nivel
+- **Sistema de Logros** - Tracking de métricas de rendimiento
+- **Leaderboards** - Comparación de puntuaciones globales
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
+
+## 👨‍💻 Autor
+
+**Felipe Reyes Sanchez**
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📞 Soporte
+
+Si encuentras algún problema o tienes preguntas:
+
+- 🐛 **Issues**: [GitHub Issues](https://github.com/tu-usuario/candy-crush/issues)
+- 📖 **Documentación**: [React Native Docs](https://reactnative.dev/docs/getting-started)
+
+<br/>
+
+- **Correo:** [jfelipe9.121@gmail.com](mailto:jfelipe9.121@gmail.com)  
+- **LinkedIn:** [felipereyessa](https://www.linkedin.com/in/felipereyessa)  
+- **Sitio Web:** [Mi Sitio web](https://felipesanchezdev.site)
+
+---
+
+⭐ **¡Dale una estrella al repo si te gustó!** ⭐
