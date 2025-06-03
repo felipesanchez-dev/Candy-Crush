@@ -47,7 +47,6 @@
 
 > 💡 **Tip**: Haz clic en cualquier imagen para verla en tamaño completo
 
-// ...existing code...
 
 ## 📱 Descripción del Proyecto
 
