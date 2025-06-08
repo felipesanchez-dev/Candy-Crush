@@ -939,7 +939,7 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](L
 ```
 MIT License
 
-Copyright (c) 2024 Felipe Reyes Sanchez
+Copyright (c) 2025 Felipe Reyes Sanchez
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
