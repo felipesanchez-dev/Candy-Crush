@@ -883,7 +883,7 @@ timeline
 # 1. Fork el repositorio en GitHub
 
 # 2. Clonar tu fork
-git clone https://github.com/TU-USUARIO/Candy-Crush.git
+git clone https://github.com/felipesanchez-dev/Candy-Crush.git
 cd Candy-Crush
 
 # 3. Agregar upstream
